@@ -20,10 +20,14 @@
     <style>
       @font-face {
         font-family: 'cerebrisans';
-        src: url('assets/fonts/cerebrisans/cerebrisans-regular.woff');
+        src: url('<%= BASE_URL %>assets/fonts/cerebrisans/cerebrisans-regular.woff');
       }
       *{
         font-family: 'cerebrisans';
+      }
+
+      .modal-backdrop {
+        background-color: #12263f3b !important;
       }
     </style>
     <title><%= htmlWebpackPlugin.options.title %></title>
