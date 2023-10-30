@@ -1,5 +1,5 @@
 <template>
-        <div>
+    <div>
         <Sidebar />
         <div class="main-content">
             <TopNav />
@@ -255,13 +255,12 @@ export default {
         this.load_data = true;
         axios.get(this.$url+'/listar_usuario_admin/'+this.filtro,{
         headers: {'Content-Type': 'application/json',
-        'Authorization': this.$token
+        'Authorization': this.$store.state.token,
         }
         }).then((result) => {
           this.colaboradores = result.data;
           this.colaboradores_constructor = this.colaboradores;
           this.load_data = false;
-          console.log(this.colaboradores);
         }).catch((error) => {
           console.log(error);
         });
