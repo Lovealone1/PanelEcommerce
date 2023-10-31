@@ -355,8 +355,29 @@ import axios from 'axios';
                     type: 'error'
                 });
             }else{
-                console.log(this.producto);
+                this.registro();
             }
+        },
+        registro(){
+            var fm = new FormData();
+            fm.append('titulo',this.producto.titulo);
+            fm.append('categoria',this.producto.categoria);
+            fm.append('precio',this.producto.precio);
+            fm.append('descripcion',this.producto.descripcion);
+            fm.append('estado',this.producto.estado);
+            fm.append('descuento',this.producto.descuento);
+            fm.append('portada',this.producto.portada);
+
+            axios.post(this.$url+'/registro_producto_admin',fm,{
+                headers:{
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': this.$store.state.token,
+                }
+            }).then((result) => {
+                console.log(result);
+            }).catch((error) => {
+                console.log(error);
+            });
         }
     },
   }

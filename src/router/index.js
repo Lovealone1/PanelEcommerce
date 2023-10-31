@@ -17,6 +17,7 @@ const routes = [
   {path: '/dashboard', name: 'dashboard',component: ()=>import('@/views/DashboardApp.vue'),meta: { requiresAuth: true }},
   //{path: '/about', name: 'about',},
 
+  {path: '/producto', name: 'producto-index',component: ()=>import('@/views/productos/IndexProductoApp.vue') ,meta: { requiresAuth: true }},
   {path: '/producto/create', name: 'producto-create',component: ()=>import('@/views/productos/CreateProductoApp.vue') ,meta: { requiresAuth: true }},
 ]
 
@@ -44,7 +45,6 @@ router.beforeEach((to, from, next) => {
     }
 
     if (jwtDecode(store.state.token).exp*1000<=new Date().getTime()) {
-      console.log('Romalaasdjasdjdas');
       next({
         name: 'login'
       })
