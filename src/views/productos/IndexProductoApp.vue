@@ -58,13 +58,6 @@
                                         Productos
                                     </h4>
 
-                                    
-
-                                    <!-- Button -->
-                                    <a href="#!" class="btn btn-sm btn-primary text-white">
-                                        Nuevo producto
-                                    </a>
-
                                 </div>
                                 <div class="card-header">
                                     <div class="input-group input-group-flush input-group-merge input-group-reverse">
@@ -96,8 +89,8 @@
                                     </template>
                                     <template v-if="!load_data">
                                         <div>
-                                                    <ul class="list-group list-group-lg list-group-flush list my-n4" v-if="productos.length >= 1">
-                                                <li class="list-group-item" v-for="item in productos">
+                                            <ul id="my-table" class="list-group list-group-lg list-group-flush list my-n4" v-if="productos.length >= 1">
+                                                <li class="list-group-item" v-for="item in itemsForList">
                                                     <div class="row align-items-center">
                                                     <div class="col-auto">
 
@@ -140,15 +133,9 @@
                                                             <i class="fe fe-more-vertical"></i>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-end">
-                                                            <a href="#!" class="dropdown-item">
-                                                            Action
-                                                            </a>
-                                                            <a href="#!" class="dropdown-item">
-                                                            Another action
-                                                            </a>
-                                                            <a href="#!" class="dropdown-item">
-                                                            Something else here
-                                                            </a>
+                                                            <router-link :to="{name: 'producto-edit',params: {id: item._id}}" class="dropdown-item">
+                                                                Editar producto
+                                                            </router-link>
                                                         </div>
                                                         </div>
 
@@ -183,6 +170,14 @@
                                         </div>
                                     </template>
                                 </div>
+                                    <div class="card-footer">
+                                        <b-pagination
+                                        v-model="currentPage"
+                                        :total-rows="productos.length"
+                                        :per-page="perPage"
+                                        aria-controls="my-table"
+                                        ></b-pagination>
+                                    </div>
                                 </div>
 
                             </div>
@@ -210,6 +205,14 @@ import currency_formater from 'currency-formatter';
             productos: [],
             filtro: '',
             load_data: false, 
+            currentPage: 1,
+            perPage: 1,
+            get itemsForList(){
+                return this.productos.slice(
+                    (this.currentPage - 1)*this.perPage, this.currentPage * this.perPage
+                )
+            }
+
         }
     },
     methods: {

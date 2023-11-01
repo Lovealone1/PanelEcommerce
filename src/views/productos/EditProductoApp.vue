@@ -19,7 +19,7 @@
 
                             <!-- Title -->
                             <h1 class="header-title">
-                                Nuevo producto
+                                Editar producto
                             </h1>
 
                             </div>
@@ -33,7 +33,7 @@
                                 <router-link class="nav-link" to="/producto">Todos los productos</router-link>
                                 </li>
                                   <li class="nav-item">
-                                    <a class="nav-link active">Nuevo producto</a>
+                                    <a class="nav-link active">Editar producto</a>
                         
                             </li>
                         
@@ -141,7 +141,7 @@
                                             </label>
 
                                             <!-- Input -->
-                                            <input type="number" class="form-control" placeholder="Precio" v-model="producto.precio">
+                                            <input type="number" readonly class="form-control" placeholder="Precio" v-model="producto.precio">
 
                                             </div>
 
@@ -250,7 +250,7 @@
 
                                         <!-- Button -->
                                         <button class="btn btn-primary" v-on:click="validar()">
-                                        Crear producto
+                                        Actualizar producto
                                         </button>
 
 
@@ -268,7 +268,7 @@ import Sidebar from '@/components/Sidebar.vue';
 import TopNav from '@/components/TopNav.vue';
 import axios from 'axios';
   export default {
-    name: 'CreateProductoApp',
+    name: 'EditProductoApp',
     components: {
       Sidebar,
       TopNav
@@ -286,6 +286,19 @@ import axios from 'axios';
         }
     },
     methods:{
+        init_data(){
+            axios.get(this.$url+'/obtener_producto_admin/'+this.$route.params.id,{
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': this.$store.state.token,
+                }
+            }).then((result) => {
+                this.producto = result.data;
+                this.str_image = this.$url+'/obtener_portada_producto/'+this.producto.portada;
+            }).catch((error) => {
+                console.log(error);
+            });
+        },
         uploadImage($event){
 
             var image;
@@ -306,6 +319,7 @@ import axios from 'axios';
                     text: 'El recurso debe ser una imagen',
                     type: 'error'
                 });
+                this.portada = undefined; 
                 }
             }else{
                 this.$notify({
@@ -314,6 +328,7 @@ import axios from 'axios';
                     text: 'La imagen debe pesar menos de 1MB',
                     type: 'error'
                 });
+                this.portada = undefined; 
             }
         },
         validar(){
@@ -331,13 +346,6 @@ import axios from 'axios';
                     text: 'Seleccione la categoría del producto',
                     type: 'error'
                 });
-            }else if(!this.producto.precio){
-                this.$notify({
-                    group: 'foo',
-                    title: 'ERROR',
-                    text: 'Ingrese el precio del producto',
-                    type: 'error'
-                });
             }else if(this.producto.portada == undefined){
                 this.$notify({
                     group: 'foo',
@@ -353,31 +361,54 @@ import axios from 'axios';
                     type: 'error'
                 });
             }else{
-                this.registro();
+                this.actualiar();
             }
         },
-        registro(){
-            var fm = new FormData();
-            fm.append('titulo',this.producto.titulo);
-            fm.append('categoria',this.producto.categoria);
-            fm.append('precio',this.producto.precio);
-            fm.append('descripcion',this.producto.descripcion);
-            fm.append('estado',this.producto.estado);
-            fm.append('descuento',this.producto.descuento);
-            fm.append('portada',this.producto.portada);
-
-            axios.post(this.$url+'/registro_producto_admin',fm,{
+        actualiar(){
+            var data;
+            var content = '';
+            if (this.portada != undefined) {
+                content = 'multipart/form-data'
+                data = new FormData();
+                fm.append('titulo',this.producto.titulo);
+                fm.append('categoria',this.producto.categoria);
+                fm.append('descripcion',this.producto.descripcion);
+                fm.append('estado',this.producto.estado);
+                fm.append('descuento',this.producto.descuento);
+                fm.append('portada',this.producto.portada); 
+            }else{
+                content = 'application/json'
+                data = this.producto; 
+            }
+            axios.put(this.$url+'/actualizar_producto_admin/'+this.$route.params.id,data,{
                 headers:{
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': content,
                     'Authorization': this.$store.state.token,
                 }
             }).then((result) => {
-                console.log(result);
+                if(result.data.message){
+                    this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: result.data.message,
+                    type: 'error'
+                });
+                }else{
+                    this.$notify({
+                    group: 'foo',
+                    title: 'SUCCESS',
+                    text: 'Se actualizó el producto correctamente',
+                    type: 'success'
+                });
+                }
             }).catch((error) => {
                 console.log(error);
             });
         }
     },
+    beforeMount(){
+        this.init_data();
+    }
   }
   </script>
   
