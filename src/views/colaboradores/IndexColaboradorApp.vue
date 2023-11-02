@@ -145,7 +145,7 @@
                                       </a>
                                       <div class="dropdown-menu dropdown-menu-end">
                                         <router-link style="cursor:pointer"  class="dropdown-item" :to="{name:'colaborador-edit',params: {id: item._id}}">Editar</router-link>
-                                        <a style="cursor:pointer" class="dropdown-item" v-b-modal.modal="'delete-'+item._id">
+                                        <a style="cursor:pointer" class="dropdown-item" v-b-modal="'delete-'+item._id">
                                           <span v-if="item.estado">Desactivar</span>
                                           <span v-if="!item.estado">Activar</span>
                                         </a>

@@ -88,7 +88,7 @@
                                         <hr class="my-5">
 
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-12 col-md-6">
 
                                             <!-- Email address -->
                                             <div class="form-group">
@@ -118,7 +118,10 @@
                                             <label class="form-label">
                                                 Categoria
                                             </label>
-
+                                            <!-- Form text -->
+                                            <small class="form-text text-muted">
+                                                This contact will be shown to others publicly, so choose it carefully.
+                                            </small>
                                             <!-- Input -->
                                             <select name="" class="form-select" v-model="producto.categoria">
                                                 <option value="" disabled selected>Seleccionar</option>
@@ -130,6 +133,24 @@
                                             </div>
 
                                         </div>
+
+                                        <div class="col-12 col-md-6">
+
+<!-- Last name -->
+                                        <div class="form-group">
+
+                                        <!-- Label -->
+                                        <label class="form-label" >
+                                            Variación
+                                        </label>
+
+                                        <!-- Input -->
+                                        <input type="text" class="form-control" placeholder="Título de la variacion" v-model="producto.str_variedad">
+
+                                        </div>
+
+                                        </div>
+
                                         <div class="col-12 col-md-6">
 
                                             <!-- Last name -->
@@ -245,15 +266,109 @@
                                         </div>
                                         </div> <!-- / .row -->
 
+
+                                        <!-- Button -->
+                                        <button class="btn btn-primary mt-4" v-on:click="validar()">
+                                        Actualizar producto
+                                        </button>
                                         <!-- Divider -->
                                         <hr class="mt-4 mb-5">
 
-                                        <!-- Button -->
-                                        <button class="btn btn-primary" v-on:click="validar()">
-                                        Actualizar producto
-                                        </button>
 
 
+                                        <div class="row justify-content-between align-items-center mb-5">
+                                            <div class="col-12">
+
+                                                <!-- Heading -->
+                                                <h2 class="mb-2">
+                                                    Variedades de producto
+                                                </h2>
+
+                                                <!-- Text -->
+                                                <p class="text-muted mb-xl-0">
+                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa dolore aspernatur, beatae id quod consequuntur.
+                                                </p>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="row mb-5">
+                                            <div class="col-lg-5">
+                                                <small class="text-muted">
+                                                    Proveedor
+                                                </small>
+                                                <input type="text" class="form-control" placeholder="Empresa proveedora" v-model="variedad.proveedor">
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <small class="text-muted">
+                                                    Variedad
+                                                </small>
+                                                <input type="text" class="form-control" placeholder="Tallas, colores..." v-model="variedad.variacion">
+                                            </div>
+                                            <div class="col">
+                                                    <small class="text-muted">
+                                                    Acción*
+                                                </small> <br>
+                                                <button class="btn btn-primary btn-block" style="width: 100% !important;" v-on:click="validar_variedad">Agregar</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-body">
+
+                                                <!-- List group -->
+                                                <div class="list-group list-group-flush my-n3">
+
+                                                <div class="list-group-item" v-for="item in variaciones">
+                                                    <div class="row align-items-center" >
+
+                                                    <div class="col-auto">
+                                                        <!-- Heading -->
+                                                        <h4 class="mb-0">
+                                                        {{item.variacion.toUpperCase()}}
+                                                        </h4>
+
+                                                        <!-- Text -->
+                                                        <small class="text-muted">
+                                                        {{item.sku.toUpperCase()}}
+                                                        </small>
+                                                    </div>
+                                                    <div class="col">
+
+                                                    <!-- Heading -->
+                                                        <h4 class="mb-0">
+                                                        {{item.stock}}
+                                                        </h4>
+
+                                                        <!-- Text -->
+                                                        <small class="text-muted">
+                                                        Unidades
+                                                        </small>
+
+                                                    </div>
+                                                    <div class="col-auto">
+
+                                                        <!-- Button -->
+                                                        <button  v-if="item.stock == 0" class="btn btn-sm btn-danger" type="button" v-b-modal="'delete-'+item._id">
+                                                        Eliminar
+                                                        </button>
+
+                                                        <button v-if="item.stock >= 1" disabled class="btn btn-sm btn-danger" type="button">
+                                                        Eliminar
+                                                        </button>
+
+                                                        <b-modal centered :id="'delete-'+item._id" title="BootstrapVue" title-html="<h4 class='card-header-title'><b>Add a member</b></h4>" 
+                                                        @ok="eliminar(item._id,item.estado)" >
+                                                            <p class="my-4">{{item._id}}</p>
+                                                        </b-modal>
+                                                    </div>
+                                                    </div> <!-- / .row -->
+                                                </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
                                 </div>
                     </div>
                 </div> <!-- / .row -->
@@ -267,6 +382,7 @@
 import Sidebar from '@/components/Sidebar.vue';
 import TopNav from '@/components/TopNav.vue';
 import axios from 'axios';
+
   export default {
     name: 'EditProductoApp',
     components: {
@@ -283,6 +399,9 @@ import axios from 'axios';
                 portada: undefined,
             },
             portada: undefined, 
+            variedad: {},
+            sku: '',
+            variaciones: [],
         }
     },
     methods:{
@@ -357,7 +476,14 @@ import axios from 'axios';
                 this.$notify({
                     group: 'foo',
                     title: 'ERROR',
-                    text: 'Ingrese la descripcion del producto',
+                    text: 'Seleccione una imagen de portada',
+                    type: 'error'
+                });
+            }else if(!this.producto.str_variedad){
+                this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: 'Ingrese una variación',
                     type: 'error'
                 });
             }else{
@@ -374,6 +500,7 @@ import axios from 'axios';
                 fm.append('categoria',this.producto.categoria);
                 fm.append('descripcion',this.producto.descripcion);
                 fm.append('estado',this.producto.estado);
+                fm.append('str_variedad',this.producto.str_variedad);
                 fm.append('descuento',this.producto.descuento);
                 fm.append('portada',this.producto.portada); 
             }else{
@@ -400,14 +527,99 @@ import axios from 'axios';
                     text: 'Se actualizó el producto correctamente',
                     type: 'success'
                 });
+                this.$router.push({name: 'producto-index'});
                 }
             }).catch((error) => {
                 console.log(error);
+            });
+        },
+        validar_variedad(){
+            if(!this.variedad.proveedor){
+                this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: 'Ingrese el proveedor del producto',
+                    type: 'error'
+                });
+            }else if(!this.variedad.variacion){
+                this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: 'Ingrese la variacion del producto',
+                    type: 'error'
+                });
+            }else{
+                this.variedad.producto = this.$route.params.id;
+                this.variedad.sku = this.generar_sku();
+                this.registro_variacion();
+            }
+            
+        },
+        registro_variacion(){
+            axios.post(this.$url+'/registro_variacion_producto',this.variedad,{
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': this.$store.state.token,
+                }
+            }).then((result) => {
+                this.variedad = {};
+                this.$notify({
+                    group: 'foo',
+                    title: 'SUCCESS',
+                    text: 'Se agregó la variación correctamente',
+                    type: 'success'
+                });
+                this.init_variedades();
+            }).catch((error) => {
+                console.log(error);
+            });
+        },
+        generar_sku(){
+            let sku = this.producto.titulo.substr(0,3)+''+this.producto.str_variedad.substr(0,3)+''+this.variedad.variacion.substr(0,3)+''+this.variedad.proveedor.substr(0,3);
+            return sku.toUpperCase();
+        },
+        init_variedades(){
+            axios.get(this.$url+'/obtener_variedades_producto/'+this.$route.params.id,{
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': this.$store.state.token,
+                }
+            }).then((result) => {
+                
+                this.variaciones = result.data;
+                
+            });
+        },
+        eliminar(id){
+            axios.delete(this.$url+'/eliminar_variedad_producto/'+id,{
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': this.$store.state.token,
+                }
+            }).then((result) => {
+
+                if (result.data.message) {
+                    this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: result.data.message,
+                    type: 'error'
+                });
+                } else {
+                    this.$notify({
+                    group: 'foo',
+                    title: 'SUCCESS',
+                    text: 'Se eliminó la variación correctamente',
+                    type: 'success'
+                    });
+                    this.init_variedades();
+                }
             });
         }
     },
     beforeMount(){
         this.init_data();
+        this.init_variedades();
     }
   }
   </script>

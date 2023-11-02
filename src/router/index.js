@@ -51,9 +51,7 @@ router.beforeEach((to, from, next) => {
       })
     }
     next()
-    console.log('Private view');
   }else{
-    console.log('Publica');
     next()
   }
   

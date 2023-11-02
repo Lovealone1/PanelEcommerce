@@ -88,7 +88,7 @@
                                         <hr class="my-5">
 
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-12 col-md-6">
 
                                             <!-- Email address -->
                                             <div class="form-group">
@@ -119,6 +119,9 @@
                                                 Categoria
                                             </label>
 
+                                            <small class="form-text text-muted">
+                                                This contact will be shown to others publicly, so choose it carefully.
+                                            </small>
                                             <!-- Input -->
                                             <select name="" class="form-select" v-model="producto.categoria">
                                                 <option value="" disabled selected>Seleccionar</option>
@@ -130,6 +133,24 @@
                                             </div>
 
                                         </div>
+
+                                        <div class="col-12 col-md-6">
+
+                                        <!-- Last name -->
+                                        <div class="form-group">
+
+                                        <!-- Label -->
+                                        <label class="form-label" >
+                                            Variación
+                                        </label>
+
+                                        <!-- Input -->
+                                        <input type="text" class="form-control" placeholder="Título de la variacion" v-model="producto.str_variedad">
+
+                                        </div>
+
+                                        </div>
+
                                         <div class="col-12 col-md-6">
 
                                             <!-- Last name -->
@@ -294,7 +315,7 @@ import axios from 'axios';
                 image = $event.target.files[0];
             }
             
-            if (image.size <= 100000) {
+            if (image.size <= 1000000) {
                 if (image.type == 'image/jpeg' || image.type == 'image/png' || image.type == 'image/webp' || image.type == 'image/jpg') {
                     this.str_image = URL.createObjectURL(image);
                     this.portada = image; 
@@ -306,6 +327,7 @@ import axios from 'axios';
                     text: 'El recurso debe ser una imagen',
                     type: 'error'
                 });
+                this.portada = undefined;
                 }
             }else{
                 this.$notify({
@@ -314,6 +336,7 @@ import axios from 'axios';
                     text: 'La imagen debe pesar menos de 1MB',
                     type: 'error'
                 });
+                this.portada = undefined;
             }
         },
         validar(){
@@ -352,6 +375,13 @@ import axios from 'axios';
                     text: 'Ingrese la descripcion del producto',
                     type: 'error'
                 });
+            }else if(!this.producto.str_variedad){
+                this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: 'Ingrese una variación',
+                    type: 'error'
+                });
             }else{
                 this.registro();
             }
@@ -363,6 +393,7 @@ import axios from 'axios';
             fm.append('precio',this.producto.precio);
             fm.append('descripcion',this.producto.descripcion);
             fm.append('estado',this.producto.estado);
+            fm.append('str_variedad',this.producto.str_variedad);
             fm.append('descuento',this.producto.descuento);
             fm.append('portada',this.producto.portada);
 
@@ -372,7 +403,22 @@ import axios from 'axios';
                     'Authorization': this.$store.state.token,
                 }
             }).then((result) => {
-                console.log(result);
+                if(result.data.message){
+                    this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: result.data.message,
+                    type: 'error'
+                });
+                }else{
+                    this.$notify({
+                    group: 'foo',
+                    title: 'SUCCESS',
+                    text: 'Se registró el producto correctamente',
+                    type: 'success'
+                });
+                this.$router.push({name: 'producto-index'});
+                }
             }).catch((error) => {
                 console.log(error);
             });

@@ -111,8 +111,8 @@
                                                         <p class="card-text small text-muted mb-1">
                                                             {{item.categoria}} &nbsp;
                                                                                             <!-- Badge -->
-                                                            <span v-if="!item.estado" class="item-score badge bg-danger-soft">Publicado</span>
-                                                            <span v-if="item.estado" class="item-score badge bg-success-soft">No publicado</span>
+                                                            <span v-if="!item.estado" class="item-score badge bg-danger-soft">No publicado</span>
+                                                            <span v-if="item.estado" class="item-score badge bg-success-soft">Publicado</span>
                                                         </p>
 
                                                         <!-- Time -->
@@ -206,7 +206,7 @@ import currency_formater from 'currency-formatter';
             filtro: '',
             load_data: false, 
             currentPage: 1,
-            perPage: 1,
+            perPage: 10,
             get itemsForList(){
                 return this.productos.slice(
                     (this.currentPage - 1)*this.perPage, this.currentPage * this.perPage
@@ -226,7 +226,6 @@ import currency_formater from 'currency-formatter';
             }).then((result) => {
                 this.productos = result.data;
                 this.load_data = false;
-                console.log(this.productos);
             }).catch((error) => {
                 console.log(error);
             });
