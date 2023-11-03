@@ -496,13 +496,13 @@ import axios from 'axios';
             if (this.portada != undefined) {
                 content = 'multipart/form-data'
                 data = new FormData();
-                fm.append('titulo',this.producto.titulo);
-                fm.append('categoria',this.producto.categoria);
-                fm.append('descripcion',this.producto.descripcion);
-                fm.append('estado',this.producto.estado);
-                fm.append('str_variedad',this.producto.str_variedad);
-                fm.append('descuento',this.producto.descuento);
-                fm.append('portada',this.producto.portada); 
+                data.append('titulo',this.producto.titulo);
+                data.append('categoria',this.producto.categoria);
+                data.append('descripcion',this.producto.descripcion);
+                data.append('estado',this.producto.estado);
+                data.append('str_variedad',this.producto.str_variedad);
+                data.append('descuento',this.producto.descuento);
+                data.append('portada',this.producto.portada); 
             }else{
                 content = 'application/json'
                 data = this.producto; 

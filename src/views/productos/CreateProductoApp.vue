@@ -162,7 +162,7 @@
                                             </label>
 
                                             <!-- Input -->
-                                            <input type="number" class="form-control" placeholder="Precio" v-model="producto.precio">
+                                            <input disabled type="number" class="form-control" placeholder="Precio" value="0">
 
                                             </div>
 
@@ -354,13 +354,6 @@ import axios from 'axios';
                     text: 'Seleccione la categoría del producto',
                     type: 'error'
                 });
-            }else if(!this.producto.precio){
-                this.$notify({
-                    group: 'foo',
-                    title: 'ERROR',
-                    text: 'Ingrese el precio del producto',
-                    type: 'error'
-                });
             }else if(this.producto.portada == undefined){
                 this.$notify({
                     group: 'foo',
@@ -390,7 +383,6 @@ import axios from 'axios';
             var fm = new FormData();
             fm.append('titulo',this.producto.titulo);
             fm.append('categoria',this.producto.categoria);
-            fm.append('precio',this.producto.precio);
             fm.append('descripcion',this.producto.descripcion);
             fm.append('estado',this.producto.estado);
             fm.append('str_variedad',this.producto.str_variedad);
