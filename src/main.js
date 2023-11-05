@@ -10,6 +10,7 @@ import { ModalPlugin } from 'bootstrap-vue'
 Vue.config.productionTip = false
 Vue.prototype.$url = 'http://localhost:4201/api';
 Vue.prototype.$token = localStorage.getItem('token');
+Vue.prototype.$categorias = ['Perifericos','Smartphones','Componentes','Monitores'];
 Vue.prototype.$ganancia = 25;
 
 

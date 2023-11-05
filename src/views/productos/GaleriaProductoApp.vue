@@ -51,7 +51,7 @@
                                                 <div class="col-12 text-center">
                                                     <div class="spinner-border mt-5 mb-5" role="status">
                                                     <span class="visually-hidden">Loading...</span>
-                                                    </div>
+                                                    </div>  
                                                 </div>
                                             </div>
                                         </div>

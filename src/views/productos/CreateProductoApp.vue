@@ -88,7 +88,7 @@
                                         <hr class="my-5">
 
                                         <div class="row">
-                                            <div class="col-12 col-md-6">
+                                            <div class="col-12 col-md-12">
 
                                             <!-- Email address -->
                                             <div class="form-group">
@@ -109,6 +109,7 @@
                                             </div>
 
                                         </div>
+
                                         <div class="col-12 col-md-6">
 
                                             <!-- First name -->
@@ -125,9 +126,30 @@
                                             <!-- Input -->
                                             <select name="" class="form-select" v-model="producto.categoria">
                                                 <option value="" disabled selected>Seleccionar</option>
-                                                <option value="Categoria 1">Categoria 1</option>
-                                                <option value="Categoria 2">Categoria 2</option>
-                                                <option value="Categoria 3">Categoria 3</option>
+                                                <option :value="item" v-for="item in $categorias">{{item}}</option>
+                                            </select>
+
+                                            </div>
+
+                                            </div>
+
+                                        <div class="col-12 col-md-6">
+
+                                            <!-- First name -->
+                                            <div class="form-group">
+
+                                            <!-- Label -->
+                                            <label class="form-label">
+                                                Subcategoria
+                                            </label>
+
+                                            <small class="form-text text-muted">
+                                                This contact will be shown to others publicly, so choose it carefully.
+                                            </small>
+                                            <!-- Input -->
+                                            <select name="" class="form-select" v-model="producto.subcategoria">
+                                                <option value="" disabled selected>Seleccionar</option>
+                                                <option :value="item" v-for="item in subcategorias">{{item}}</option>
                                             </select>
 
                                             </div>
@@ -302,7 +324,9 @@ import axios from 'axios';
                 estado: false,
                 descuento: false,
                 portada: undefined,
+                subcategoria: '',
             },
+            subcategorias: ['Mouses','Teclados','Headsets'],
             portada: undefined, 
         }
     },
@@ -375,6 +399,13 @@ import axios from 'axios';
                     text: 'Ingrese una variación',
                     type: 'error'
                 });
+            }else if(!this.producto.subcategoria){
+                this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: 'Ingrese una subcategoria del producto',
+                    type: 'error'
+                });
             }else{
                 this.registro();
             }
@@ -383,6 +414,7 @@ import axios from 'axios';
             var fm = new FormData();
             fm.append('titulo',this.producto.titulo);
             fm.append('categoria',this.producto.categoria);
+            fm.append('subcategoria',this.producto.subcategoria);
             fm.append('descripcion',this.producto.descripcion);
             fm.append('estado',this.producto.estado);
             fm.append('str_variedad',this.producto.str_variedad);
