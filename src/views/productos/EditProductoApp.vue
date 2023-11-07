@@ -426,7 +426,7 @@ import axios from 'axios';
             variaciones: [],
             categorias: [],
             subcategorias: [],
-            subcategorias: ['Mouses','Teclados','Headsets'],
+
         }
     },
     methods:{
@@ -522,7 +522,7 @@ import axios from 'axios';
                 this.actualiar();
             }
         },
-        actualiar(){
+        actualizar(){
             var data;
             var content = '';
             if (this.portada != undefined) {
@@ -582,6 +582,7 @@ import axios from 'axios';
                     type: 'error'
                 });
             }else{
+                this.guardarEnMayusculas();
                 this.variedad.producto = this.$route.params.id;
                 this.variedad.sku = this.generar_sku();
                 this.registro_variacion();
@@ -610,6 +611,9 @@ import axios from 'axios';
         generar_sku(){
             let sku = this.producto.titulo.substr(0,3)+''+this.producto.str_variedad.substr(0,3)+''+this.variedad.variacion.substr(0,3)+''+this.variedad.proveedor.substr(0,3);
             return sku.toUpperCase();
+        },
+        guardarEnMayusculas(){
+            this.variedad.variacion = this.variedad.variacion.toUpperCase();
         },
         init_variedades(){
             axios.get(this.$url+'/obtener_variedades_producto/'+this.$route.params.id,{
