@@ -519,7 +519,7 @@ import axios from 'axios';
                     type: 'error'
                 });
             }else{
-                this.actualiar();
+                this.actualizar();
             }
         },
         actualizar(){
@@ -663,10 +663,10 @@ import axios from 'axios';
               this.categorias = result.data;
               this.subcategorias = this.categorias.filter(item => item.categoria.titulo == this.producto.categoria)[0].subcategorias;
           });
-      },
-      getSubcategorias(event){
+        },
+        getSubcategorias(event){
         this.subcategorias = this.categorias.filter(item => item.categoria.titulo == event.target.value)[0].subcategorias;
-      },
+        },
     },
     beforeMount(){
         this.init_data();

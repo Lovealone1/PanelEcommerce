@@ -121,6 +121,9 @@
             }).catch((error)=>{
                 console.log(error);
             });
+        },
+        logout(){
+          this.$store.dispatch('logout');
         }
     },
     components: {
