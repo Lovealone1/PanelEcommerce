@@ -99,8 +99,8 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/ingreso/create" class="nav-link" active-class="active">
-                <i class="fe fe-folder"></i> Ingreso
+              <router-link to="/ingreso" class="nav-link" active-class="active">
+                <i class="fe fe-folder"></i> Ingreso de productos
               </router-link>
             </li>
           </ul>
