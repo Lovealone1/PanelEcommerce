@@ -1,5 +1,5 @@
 <template>
-        <div>
+    <div>
         <Sidebar />
         <div class="main-content">
             <TopNav />
@@ -145,7 +145,7 @@
                                       </a>
                                       <div class="dropdown-menu dropdown-menu-end">
                                         <router-link style="cursor:pointer"  class="dropdown-item" :to="{name:'colaborador-edit',params: {id: item._id}}">Editar</router-link>
-                                        <a style="cursor:pointer" class="dropdown-item" v-b-modal.modal="'delete-'+item._id">
+                                        <a style="cursor:pointer" class="dropdown-item" v-b-modal="'delete-'+item._id">
                                           <span v-if="item.estado">Desactivar</span>
                                           <span v-if="!item.estado">Activar</span>
                                         </a>
@@ -255,13 +255,12 @@ export default {
         this.load_data = true;
         axios.get(this.$url+'/listar_usuario_admin/'+this.filtro,{
         headers: {'Content-Type': 'application/json',
-        'Authorization': this.$token
+        'Authorization': this.$store.state.token,
         }
         }).then((result) => {
           this.colaboradores = result.data;
           this.colaboradores_constructor = this.colaboradores;
           this.load_data = false;
-          console.log(this.colaboradores);
         }).catch((error) => {
           console.log(error);
         });

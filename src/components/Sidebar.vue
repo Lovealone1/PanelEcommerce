@@ -77,13 +77,38 @@
               </div>
             </li>
             <li class="nav-item">
-              <router-link to="/colaborador/index" class="nav-link">
+              <router-link to="/colaborador" class="nav-link" active-class="active">
                 <i class="fe fe-user"></i> Colaboradores
               </router-link>
             </li>
           </ul>
-    
-    
+          <hr class="navbar-divider my-3">
+
+          <h6 class="navbar-heading">
+              Control
+          </h6>
+          <ul class="navbar-nav mb-md-4">
+            <li class="nav-item">
+              <router-link to="/producto" class="nav-link" active-class="active">
+                <i class="fe fe-shopping-cart"></i> Productos
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/categorias" class="nav-link" active-class="active">
+                <i class="fe fe-tag"></i> Categorias
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/ingreso" class="nav-link" active-class="active">
+                <i class="fe fe-folder"></i> Ingreso de productos
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/ventas" class="nav-link" active-class="active">
+                <i class="fe fe-shopping-bag"></i> Ventas
+              </router-link>
+            </li>
+          </ul>
           <!-- Push content down -->
           <div class="mt-auto"></div>
     
