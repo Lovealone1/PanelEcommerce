@@ -103,6 +103,11 @@
                 <i class="fe fe-folder"></i> Ingreso de productos
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link to="/ventas" class="nav-link" active-class="active">
+                <i class="fe fe-shopping-bag"></i> Ventas
+              </router-link>
+            </li>
           </ul>
           <!-- Push content down -->
           <div class="mt-auto"></div>
