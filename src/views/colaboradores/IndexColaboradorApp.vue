@@ -54,26 +54,8 @@
                             <div class="card-header">
                               <div class="row align-items-center">
                                 <div class="col">
-
-                                  <!-- Form -->
-                                  <form>
-                                    <div class="input-group input-group-flush input-group-merge input-group-reverse">
-                                      <input class="form-control list-search" type="search" v-model="filtro" placeholder="Buscar colaborador">
-                                      <span class="input-group-text">
-                                        <i class="fe fe-search"></i>
-                                      </span>
-                                    </div>
-                                  </form>
-
-                                </div>
-                                
+                                </div>                                
                                 <div class="col-auto">
-
-                                  <!-- Dropdown -->
-                                  <button class="btn btn-sm btn-white" type="button" v-on:click="filtrar()">
-                                    <i class="fe fe-sliders me-1"></i> Filter <span class="badge bg-primary ms-1 d-none">0</span>
-                                  </button>
-
                                 </div>
                               </div> <!-- / .row -->
                             </div>
@@ -293,4 +275,3 @@ export default {
     },
   }
   </script>
-  
