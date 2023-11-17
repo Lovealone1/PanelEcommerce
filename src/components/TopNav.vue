@@ -1,43 +1,39 @@
 <template>
-        <nav class="navbar navbar-expand-md navbar-light d-md-flex">
-        <div class="container-fluid">
+  <nav class="navbar navbar-expand-md navbar-light d-md-flex">
+  <div class="container-fluid">
 
-  <!-- Form -->
-  <form class="form-inline me-4 d-none d-md-flex">
-      
-  </form>
+<!-- Form -->
+<form class="form-inline me-4 d-none d-md-flex">
 
-  <!-- User -->
-  <div class="navbar-user">
+</form>
+
+<!-- User -->
+<div class="navbar-user">
 
 
-      <!-- Dropdown -->
-      <div class="dropdown">
+<!-- Dropdown -->
+<div class="dropdown">
 
-      <!-- Toggle -->
-      <a href="#" class="avatar avatar-sm avatar-online dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="/assets/img/avatar-1.jpg" alt="..." class="avatar-img rounded-circle" style="-webkit-mask-image: none;" >
-      </a>
+<!-- Toggle -->
+<a href="#" class="avatar avatar-sm avatar-online dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <img src="/assets/img/avatar-1.jpg" alt="..." class="avatar-img rounded-circle" style="-webkit-mask-image: none;" >
+</a>
 
-      <!-- Menu -->
-      <div class="dropdown-menu dropdown-menu-end">
-          <a href="./profile-posts.html" class="dropdown-item">Profile</a>
-          <a href="./account-general.html" class="dropdown-item">Settings</a>
-          <hr class="dropdown-divider">
-          <a href="./sign-in.html" class="dropdown-item">Logout</a>
-      </div>
+<!-- Menu -->
+<div class="dropdown-menu dropdown-menu-end">
+    <a href="./" class="dropdown-item">Cerrar Sesión</a>
+</div>
 
-      </div>
+</div>
 
-  </div>
+</div>
 
-  </div>
-        </nav>
+</div>
+  </nav>
 </template>
-  
-  <script>
-  export default {
-    name: 'TopNav',
-  }
-  </script>
-  
+
+<script>
+export default {
+name: 'TopNav',
+}
+</script>
